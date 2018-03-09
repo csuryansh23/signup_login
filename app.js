@@ -12,12 +12,23 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 // Connecting to local mongo db
-mongoose.connect('mongodb://localhost/loginapp');
-var db = mongoose.connection;
+//mongoose.connect('mongodb://localhost/loginapp');
+//var db = mongoose.connection;
 
 // Load Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+//Load Keys
+const keys = require('./config/keys');
+
+//Map global promises
+mongoose.Promise = global.Promise;
+//Mongoose Connect
+mongoose.connect(keys.mongoURI,{
+}).then(()=>{
+    console.log('MongoDB Connected!');
+}).catch(err => console.log(err));
 
 // Init App
 var app = express();
