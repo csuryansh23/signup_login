@@ -15,7 +15,9 @@ router.get('/login', function(req, res){
 	res.render('login');
 });
 
-// Register User
+
+
+// Register User via Local Register
 router.post('/register', function(req, res){
 	var name = req.body.name;
 	var email = req.body.email;
@@ -56,6 +58,7 @@ router.post('/register', function(req, res){
 	}
 });
 
+//Local Strategy
 passport.use(new LocalStrategy(
   function(username, password, done) {
    User.getUserByUsername(username, function(err, user){
@@ -73,7 +76,8 @@ passport.use(new LocalStrategy(
    		}
    	});
    });
-  }));
+	}));
+
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -90,6 +94,8 @@ router.post('/login',
   function(req, res) {
     res.redirect('/');
   });
+
+
 
 router.get('/logout', function(req, res){
 	req.logout();
